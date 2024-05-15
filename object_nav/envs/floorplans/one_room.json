@@ -4,7 +4,7 @@
     "auto": {
       "room_split_dirs": ["vert", "horz"],
       "min_room_dim": 1,
-      "max_num_room": 3
+      "max_num_room": 2
     },
     "width": 12,
     "height": 12,
@@ -24,39 +24,7 @@
               {
                 "type": "bed",
                 "state": [["dustyable", 1], ["stainable", 0]],
-                "pos": null,
-                "objs": {
-                  "num": 2,
-                  "initial": [
-                    {
-                      "type": "book",
-                      "state": [["dustyable", 1]],
-                      "pos": null,
-                      "objs": null
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "sofa",
-                "state": [["dustyable", 1], ["stainable", 0]],
-                "pos": null,
-                "objs": {
-                  "num": 1,
-                  "initial": [
-                    {
-                      "type": "hardback",
-                      "state": [["dustyable", 0]],
-                      "pos": null,
-                      "objs": null
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "table",
-                "state": [["dustyable", 0], ["stainable", 1]],
-                "pos": null,
+                "pos": [1, 1],
                 "objs": null
               },
               {
@@ -64,6 +32,22 @@
                 "state":  [["stainable", 0]],
                 "pos": null,
                 "objs":null
+              },
+              {
+                "type": "table",
+                "state": [["dustyable", 0], ["stainable", 1]],
+                "pos": null,
+                "objs": {
+                    "num": null,
+                    "initial": [
+                        {
+                        "type": "printer",
+                        "state": [["toggleable", 0]],
+                        "pos": null,
+                        "objs": null
+                        }
+                    ]
+                }
               }
             ]
           }

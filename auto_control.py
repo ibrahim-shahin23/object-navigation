@@ -3,8 +3,11 @@
 import argparse
 from gym_minigrid.wrappers import *
 from mini_behavior.window import Window
-from mini_behavior.utils.save import get_step, save_demo
+from mini_behavior.utils.save import save_demo
 from mini_behavior.grid import GridDimension
+
+import object_nav.envs
+
 import numpy as np
 import json
 
@@ -135,20 +138,46 @@ def key_handler_cartesian(event):
     if event.key == 'pagedown':
         show_states()
         return
-    if event.key == '0':
+    if event.key == '6':
         switch_dim(None)
         return
-    if event.key == '1':
+    if event.key == '7':
         switch_dim(0)
         return
-    if event.key == '2':
+    if event.key == '8':
         switch_dim(1)
         return
-    if event.key == '3':
+    if event.key == '9':
         switch_dim(2)
         return
 
-# Todo: add other primitive actions
+    # Todo: add other primitive actions
+
+    # if event.key == '0':
+    #     step(env.actions.pickup_0)
+    #     return
+    # if event.key == '1':
+    #     step(env.actions.pickup_1)
+    #     return
+    # if event.key == '2':
+    #     step(env.actions.pickup_2)
+    #     return
+    # if event.key == '3':
+    #     step(env.actions.drop_0)
+    #     return
+    # if event.key == '4':
+    #     step(env.actions.drop_1)
+    #     return
+    # if event.key == '5':
+    #     step(env.actions.drop_2)
+    #     return
+    # if event.key == 't':
+    #     step(env.actions.toggle)
+    # if event.key == 'i':
+    #     step(env.actions.drop_in)
+    #     return
+
+
 def key_handler_primitive(event):
     print('pressed', event.key)
     if event.key == 'escape':
@@ -202,6 +231,9 @@ def key_handler_primitive(event):
     if event.key == 'pagedown':
         show_states()
         return
+    if event.key == 'backspace':
+        reset()
+        return
 
 
 parser = argparse.ArgumentParser()
@@ -211,10 +243,11 @@ parser.add_argument(
     # default='MiniGrid-ThrowingAwayLeftoversFour-8x8-N2-v1'
     # default='MiniGrid-FloorPlanEnv-16x16-N1-v0'
     # default='MiniGrid-TwoRoomNavigation-8x8-N2-v0'
-    default='MiniGrid-AutoGenerate-16x16-N2-v0'
+    # default='MiniGrid-AutoGenerate-16x16-N2-v0'
     # default='MiniGrid-CleaningACar-16x16-N2-v1'
     # default="MiniGrid-ThawingFrozenFood-16x16-N2-v0"
     # default="MiniGrid-ThrowingAwayLeftoversFour-8x8-N2-v1"
+    default="MiniGrid-NavChair-16x16-N2-v0"
 )
 parser.add_argument(
     "--seed",
@@ -256,7 +289,7 @@ parser.add_argument(
 parser.add_argument(
     "--auto_env_config",
     help='Path to auto environment JSON file',
-    default='mini_behavior/floorplans/init_install_printer.json'
+    default='object_nav/envs/floorplans/one_room.json'
 )
 
 if __name__ == '__main__':
@@ -264,7 +297,7 @@ if __name__ == '__main__':
     if args.auto_env:
         with open(args.auto_env_config, 'r') as f:
             initial_dict = json.load(f)
-            env=gym.make(args.env, initial_dict=initial_dict)
+            env = gym.make(args.env, initial_dict=initial_dict)
     else:
         env = gym.make(args.env)
 

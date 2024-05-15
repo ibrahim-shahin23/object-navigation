@@ -22,6 +22,7 @@ OBJECTS = [
 ]
 
 FURNITURE = ['ashcan', 'bed', 'bin', 'box', 'bucket', 'cabinet', 'chair', 'car', 'countertop', 'electric_refrigerator', 'shelf', 'shower', 'sink', 'sofa', 'stove', 'table', 'window']
+
 # Map of object type to integers
 OBJECT_TO_IDX = {
     'unseen': 0,
