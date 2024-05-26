@@ -1,0 +1,1 @@
+from object_nav.envs.navigate_to_chair import *
