@@ -247,7 +247,7 @@ parser.add_argument(
     # default='MiniGrid-CleaningACar-16x16-N2-v1'
     # default="MiniGrid-ThawingFrozenFood-16x16-N2-v0"
     # default="MiniGrid-ThrowingAwayLeftoversFour-8x8-N2-v1"
-    default="MiniGrid-NavChair-16x16-N2-v0"
+    default="MiniGrid-NavigateToObj-16x16-N2-v0"
 )
 parser.add_argument(
     "--seed",

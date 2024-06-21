@@ -58,9 +58,9 @@ class distance_rw(rewarder):
         self._build_grid(env)
 
         # show the grid as heat map using matplotlib
-        plt.imshow(self.grid, cmap='hot', interpolation='nearest')
+        # plt.imshow(self.grid, cmap='hot', interpolation='nearest')
         # plt.show()
-        print(self.grid)
+        # print(self.grid)
 
     def _build_grid(self, env):
         """
