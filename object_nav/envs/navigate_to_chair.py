@@ -15,14 +15,23 @@ GOAL_OBJECTS = ['chair']
 GOAL_OBJECTS_ONEHOT = {obj: [int(obj == goal_obj) for goal_obj in GOAL_OBJECTS] for obj in GOAL_OBJECTS}
 
 
-class NavigateToObj(RoomGrid):
+class NavigateToObjEnv(RoomGrid):
     """
     Environment simulate an agent navigate to a specific obj
     """
 
+    # override the Actions enum
+    class Actions(IntEnum):
+        left = 0
+        right = 1
+        forward = 2
+        open = 3
+
     def __init__(self,
                  mode='primitive',
                  initial_dict=None,
+                 dense_reward=True,
+                 room_size=16,
                  max_steps=1e5):
         # todo: make the mission random from this list
         self.goal_obj = random.sample(GOAL_OBJECTS, k=1)[0]   # random choose from Goal objects
@@ -49,8 +58,10 @@ class NavigateToObj(RoomGrid):
         super().__init__(mode=mode,
                          init_dict=initial_dict,
                          max_steps=max_steps,
-                         dense_reward=True
+                         dense_reward=dense_reward
                          )
+        self.actions = NavigateToObjEnv.Actions
+        self.action_space = spaces.Discrete(len(self.actions))
 
     def overlap_disable(self):
         for obj in self.obj_instances.values():
@@ -162,6 +173,7 @@ class NavigateToObj(RoomGrid):
         return tops, sizes
 
     def _reward(self):
+        # print(self.gen_obs())
         if self._end_conditions():
             return 2
         else:
@@ -217,7 +229,8 @@ class NavigateToObj(RoomGrid):
 
 
 register(
-    id='MiniGrid-NavChair-16x16-N2-v0',
-    entry_point='object_nav.envs:NavigateToObj'
+    id='MiniGrid-NavigateToObj-16x16-N2-v0',
+    entry_point='object_nav.envs:NavigateToObjEnv',
+    kwargs={'room_size': 10, 'max_steps': 1000, 'dense_reward': True}
 )
 
