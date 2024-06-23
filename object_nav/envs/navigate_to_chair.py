@@ -2,6 +2,7 @@ from mini_behavior.roomgrid import *
 from mini_behavior.register import register
 from mini_behavior.objects import *
 
+import os, json
 from object_nav.rewarder.rewarder import distance_rw, composite_rw, steps_rw
 import copy
 import random
@@ -228,9 +229,15 @@ class NavigateToObjEnv(RoomGrid):
         return False
 
 
+script_dir = os.path.dirname(__file__)
+env_name = "MiniGrid-NavigateToObj-16x16-N2-v0"
+kwargs = {"max_steps": 1000}
+abs_file_path = os.path.join(script_dir, './floorplans/one_room.json')
+with open(abs_file_path, 'r') as f:
+    initial_dict = json.load(f)
+    kwargs["initial_dict"] = initial_dict
 register(
-    id='MiniGrid-NavigateToObj-16x16-N2-v0',
-    entry_point='object_nav.envs:NavigateToObjEnv',
-    kwargs={'room_size': 10, 'max_steps': 1000, 'dense_reward': True}
+    id=env_name,
+    entry_point=f'object_nav.envs:NavigateToObjEnv',
+    kwargs=kwargs
 )
-
