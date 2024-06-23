@@ -13,6 +13,7 @@ import argparse
 import wandb
 from wandb.integration.sb3 import WandbCallback
 import json
+from object_nav import envs
 
 import os
 
@@ -20,7 +21,7 @@ script_dir = os.path.dirname(__file__)
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--task", required=True, help='name of task to train on')
+parser.add_argument("--task", required=False, help='name of task to train on')
 parser.add_argument("--partial_obs", default=True)
 parser.add_argument("--room_size", type=int, default=10)
 parser.add_argument("--max_steps", type=int, default=1000)
@@ -72,26 +73,11 @@ policy_kwargs = dict(
 )
 
 # Env wrapping
-env_name = f"MiniGrid-{args.task}-{args.room_size}x{args.room_size}-N2-v0"
-
-print(f'register env {args.task}')
-
-kwargs = {"room_size": args.room_size, "max_steps": args.max_steps}
-if args.auto_env:
-    abs_file_path = os.path.join(script_dir, args.auto_env_config)
-    with open(abs_file_path, 'r') as f:
-        initial_dict = json.load(f)
-        kwargs["initial_dict"] = initial_dict
+env_name = "MiniGrid-NavigateToObj-16x16-N2-v0"
 
 if args.dense_reward:
     assert args.task in ["PuttingAwayDishesAfterCleaning", "WashingPotsAndPans", "NavigateToObj"]
     kwargs["dense_reward"] = True
-
-register(
-    id=env_name,
-    entry_point=f'object_nav.envs:{args.task}Env',
-    kwargs=kwargs
-)
 
 # wandb init
 config = {
@@ -102,6 +88,7 @@ config = {
 
 print('init wandb')
 run = wandb.init(
+    entity="rl_mo",
     project=env_name,
     config=config,
     sync_tensorboard=True,  # auto-upload sb3's tensorboard metrics
