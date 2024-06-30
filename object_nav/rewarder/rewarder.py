@@ -37,6 +37,10 @@ class distance_rw(rewarder):
         value = self.grid[new_agent_pos[1], new_agent_pos[0]]\
             - self.grid[self.agent_pos[1], self.agent_pos[0]]
         self.agent_pos = new_agent_pos
+        if value > 0:
+            value *=0.9
+        elif value < 0:
+            value *=0.5
         return value
 
     def reset(self, env):  # env: NavigateToObj
@@ -124,7 +128,7 @@ class steps_rw(rewarder):
 
     def get_reward(self, env):  # env: NavigateToObj
         if not env.action_done:
-            return -1
+            return -0.5
         else:
             return -0.01
 
