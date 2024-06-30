@@ -176,7 +176,7 @@ class NavigateToObjEnv(RoomGrid):
     def _reward(self):
         # print(self.gen_obs())
         if self._end_conditions():
-            return 2
+            return 1000
         else:
             if self.dense_reward:
                 reward = self.rewarder.get_reward(self)
